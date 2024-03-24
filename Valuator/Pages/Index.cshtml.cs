@@ -21,10 +21,11 @@ public class IndexModel : PageModel
 
     }
 
-    public IActionResult OnPost(string text)
+    public IActionResult OnPost(string? text)
     {
         _logger.LogDebug(text);
 
+        text = text ?? "";
         Text textModel = new()
         {
             Rank = CalculateRank(text),
@@ -38,10 +39,10 @@ public class IndexModel : PageModel
 
     private double CalculateRank(string text)
     {
-        int alphabetSymbolsCount = 0;
-        foreach (char ch in text) alphabetSymbolsCount += char.IsLetter(ch) ? 1 : 0; 
+        int nonAlphabetSymbolsCount = 0;
+        foreach (char ch in text) nonAlphabetSymbolsCount += char.IsLetter(ch) ? 0 : 1; 
 
-        return alphabetSymbolsCount / text.Length;
+        return nonAlphabetSymbolsCount / text.Length;
     }
 
     private int CalculateSimilarity(string text)

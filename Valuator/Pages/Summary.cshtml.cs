@@ -29,7 +29,7 @@ public class SummaryModel : PageModel
         _logger.LogDebug(id);
         Text? text = _textRepository.Get(id);
 
-        Rank = text != null ? text.Rank : 0;
+        Rank = text != null ? Math.Round(text.Rank, 2) : 0;
         Similarity = text != null ? text.Similarity : 0;
     }
 }
